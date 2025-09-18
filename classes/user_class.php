@@ -1,6 +1,6 @@
 <?php
 
-require_once '../settings/db_class.php';
+require_once __DIR__ . '/../settings/db_class.php';
 
 /**
  * User model class for customer authentication and management
@@ -50,21 +50,21 @@ class User extends db_connection
     }
 
     /** Create a new user (customer) */
-    public function createUser($name, $email, $password, $country, $city, $phone_number, $role = 2)
-    {
-        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+    public function createUser($name,$email,$password,$country,$city,$phone_number,$role=2)
+{
+    $hashed_password=password_hash($password,PASSWORD_DEFAULT);
 
-        $stmt = $this->db->prepare(
-            "INSERT INTO customer (customer_name, customer_email, customer_pass, customer_country, customer_city, customer_contact, user_role)
-             VALUES (?, ?, ?, ?, ?, ?, ?)"
-        );
-        $stmt->bind_param("ssssi", $name, $email, $hashed_password, $country, $city, $phone_number, $role);
+    $stmt=$this->db->prepare(
+        "INSERT INTO customer (customer_name,customer_email,customer_pass,customer_country,customer_city,customer_contact,user_role)
+        VALUES (?,?,?,?,?,?,?)"
+    );
+    $stmt->bind_param("ssssssi",$name,$email,$hashed_password,$country,$city,$phone_number,$role);
 
-        if ($stmt->execute()) {
-            return $this->db->insert_id;
-        }
-        return false;
+    if($stmt->execute()){
+        return $this->db->insert_id;
     }
+    return false;
+}
 
     /** Check if email already exists */
     public function emailExists($email)
