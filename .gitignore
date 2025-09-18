@@ -1,0 +1,21 @@
+# macOS system files
+.DS_Store
+
+# VS Code settings
+.vscode/
+
+# Logs
+*.log
+error/php-error.log
+
+# PHP/XAMPP specific
+settings/db_cred.php     # hide your real DB credentials
+*.env
+*.env.*
+
+# Dependencies
+vendor/
+composer.lock
+
+# Node (if ever added later)
+node_modules/
