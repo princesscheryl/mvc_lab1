@@ -3,7 +3,7 @@
 require_once '../settings/db_class.php';
 
 /**
- * 
+ * User model class for customer authentication and management
  */
 class User extends db_connection
 {
@@ -24,6 +24,7 @@ class User extends db_connection
         }
     }
 
+    /** Load user details into object properties */
     private function loadUser($user_id = null)
     {
         if ($user_id) {
@@ -32,30 +33,50 @@ class User extends db_connection
         if (!$this->user_id) {
             return false;
         }
+
         $stmt = $this->db->prepare("SELECT * FROM customer WHERE customer_id = ?");
         $stmt->bind_param("i", $this->user_id);
         $stmt->execute();
         $result = $stmt->get_result()->fetch_assoc();
+
         if ($result) {
-            $this->name = $result['customer_name'];
-            $this->email = $result['customer_email'];
-            $this->role = $result['user_role'];
+            $this->name         = $result['customer_name'];
+            $this->email        = $result['customer_email'];
+            $this->password     = $result['customer_pass'];
+            $this->role         = $result['user_role'];
             $this->date_created = isset($result['date_created']) ? $result['date_created'] : null;
             $this->phone_number = $result['customer_contact'];
         }
     }
 
-    public function createUser($name, $email, $password, $phone_number, $role)
+    /** Create a new user (customer) */
+    public function createUser($name, $email, $password, $country, $city, $phone_number, $role = 2)
     {
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-        $stmt = $this->db->prepare("INSERT INTO customer (customer_name, customer_email, customer_pass, customer_contact, user_role) VALUES (?, ?, ?, ?, ?)");
-        $stmt->bind_param("ssssi", $name, $email, $hashed_password, $phone_number, $role);
+
+        $stmt = $this->db->prepare(
+            "INSERT INTO customer (customer_name, customer_email, customer_pass, customer_country, customer_city, customer_contact, user_role)
+             VALUES (?, ?, ?, ?, ?, ?, ?)"
+        );
+        $stmt->bind_param("ssssi", $name, $email, $hashed_password, $country, $city, $phone_number, $role);
+
         if ($stmt->execute()) {
             return $this->db->insert_id;
         }
         return false;
     }
 
+    /** Check if email already exists */
+    public function emailExists($email)
+    {
+        $stmt = $this->db->prepare("SELECT customer_id FROM customer WHERE customer_email = ?");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $stmt->store_result();
+        return $stmt->num_rows > 0;
+    }
+
+    /** Get a user by email */
     public function getUserByEmail($email)
     {
         $stmt = $this->db->prepare("SELECT * FROM customer WHERE customer_email = ?");
@@ -64,4 +85,39 @@ class User extends db_connection
         return $stmt->get_result()->fetch_assoc();
     }
 
+    /** Get a user by ID */
+    public function getUserById($id)
+    {
+        $stmt = $this->db->prepare("SELECT * FROM customer WHERE customer_id = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_assoc();
+    }
+
+    /** Update user details (without password) */
+    public function updateUser($id, $name, $phone_number, $role)
+    {
+        $stmt = $this->db->prepare(
+            "UPDATE customer SET customer_name = ?, customer_contact = ?, user_role = ? WHERE customer_id = ?"
+        );
+        $stmt->bind_param("ssii", $name, $phone_number, $role, $id);
+        return $stmt->execute();
+    }
+
+    /** Update user password */
+    public function updatePassword($id, $password)
+    {
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+        $stmt = $this->db->prepare("UPDATE customer SET customer_pass = ? WHERE customer_id = ?");
+        $stmt->bind_param("si", $hashed_password, $id);
+        return $stmt->execute();
+    }
+
+    /** Delete a user */
+    public function deleteUser($id)
+    {
+        $stmt = $this->db->prepare("DELETE FROM customer WHERE customer_id = ?");
+        $stmt->bind_param("i", $id);
+        return $stmt->execute();
+    }
 }
