@@ -2,9 +2,7 @@
 
 require_once __DIR__ . '/../settings/db_class.php';
 
-/**
- * User model class for customer authentication and management
- */
+
 class User extends db_connection
 {
     private $user_id;
@@ -23,8 +21,6 @@ class User extends db_connection
             $this->loadUser();
         }
     }
-
-    /** Load user details into object properties */
     private function loadUser($user_id = null)
     {
         if ($user_id) {
@@ -48,8 +44,6 @@ class User extends db_connection
             $this->phone_number = $result['customer_contact'];
         }
     }
-
-    /** Create a new user (customer) */
     public function createUser($name,$email,$password,$country,$city,$phone_number,$role=2)
 {
     $hashed_password=password_hash($password,PASSWORD_DEFAULT);
@@ -65,8 +59,6 @@ class User extends db_connection
     }
     return false;
 }
-
-    /** Check if email already exists */
     public function emailExists($email)
     {
         $stmt = $this->db->prepare("SELECT customer_id FROM customer WHERE customer_email = ?");
@@ -85,7 +77,6 @@ class User extends db_connection
         return $stmt->get_result()->fetch_assoc();
     }
 
-    /** Get a user by ID */
     public function getUserById($id)
     {
         $stmt = $this->db->prepare("SELECT * FROM customer WHERE customer_id = ?");
@@ -93,8 +84,6 @@ class User extends db_connection
         $stmt->execute();
         return $stmt->get_result()->fetch_assoc();
     }
-
-    /** Update user details (without password) */
     public function updateUser($id, $name, $phone_number, $role)
     {
         $stmt = $this->db->prepare(
@@ -103,8 +92,6 @@ class User extends db_connection
         $stmt->bind_param("ssii", $name, $phone_number, $role, $id);
         return $stmt->execute();
     }
-
-    /** Update user password */
     public function updatePassword($id, $password)
     {
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
@@ -112,8 +99,6 @@ class User extends db_connection
         $stmt->bind_param("si", $hashed_password, $id);
         return $stmt->execute();
     }
-
-    /** Delete a user */
     public function deleteUser($id)
     {
         $stmt = $this->db->prepare("DELETE FROM customer WHERE customer_id = ?");
