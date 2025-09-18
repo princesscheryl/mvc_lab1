@@ -113,7 +113,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="contact" class="form-label">Phone Number <i class="fa fa-phone"></i></label>
-                                <input type="text" class="form-control animate__animated animate__fadeInUp" id="contact" name="contact" required>
+                                <input type="text" class="form-control animate__animated animate__fadeInUp" id="contact" name="contact" placeholder="e.g., 0241234567" required>
                             </div>
                             <div class="mb-4">
                                 <label class="form-label">Register As</label>
@@ -140,13 +140,9 @@
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/country-select-js/2.1.1/js/countrySelect.min.js"></script>
-
     <script src="../js/register.js"></script>
 </body>
 </html>
