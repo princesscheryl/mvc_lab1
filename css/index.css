@@ -121,13 +121,11 @@ body::before{
 .guest-welcome h1{
     font-size:3.5rem;
     font-weight:700;
-    background:linear-gradient(135deg,#fff,rgba(255,255,255,0.8));
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
+    color:#fff;
     margin-bottom:1rem;
     text-transform:uppercase;
     letter-spacing:2px;
-    text-shadow:2px 2px 4px rgba(0,0,0,0.1)
+    text-shadow:3px 3px 6px rgba(0,0,0,0.5)
 }
 .guest-welcome .tagline{
     color:rgba(255,255,255,0.9);
