@@ -16,7 +16,6 @@ function isLoggedIn(){
     }
 }
 
-
 //function to get user ID
 function getUserID(){
     if (isLoggedIn()){
@@ -26,7 +25,11 @@ function getUserID(){
 }
 
 //function to check for role (admin, customer, etc)
-
+function isAdmin(){
+    if (isLoggedIn()){
+        return $_SESSION['user_role'] == 2;
+    }
+}
 
 
 ?>
