@@ -1,5 +1,6 @@
 <?php
 session_start();
+require_once 'settings/core.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,10 +19,22 @@ session_start();
                 <i class="fa fa-user-circle"></i>
                 <?php echo htmlspecialchars($_SESSION['user_name']); ?>
             </span>
-            <a href="login/logout.php" class="btn-menu btn-menu-logout">
-                <i class="fa fa-sign-out-alt"></i> Logout
-            </a>
+            <?php if($_SESSION['user_role']==1): ?>
+                <!-- If logged in and an admin, Logout | Category -->
+                <a href="admin/category.php" class="btn-menu btn-menu-primary">
+                    <i class="fa fa-tags"></i> Category
+                </a>
+                <a href="login/logout.php" class="btn-menu btn-menu-logout">
+                    <i class="fa fa-sign-out-alt"></i> Logout
+                </a>
+            <?php else: ?>
+                <!-- If logged in and not an admin, Logout -->
+                <a href="login/logout.php" class="btn-menu btn-menu-logout">
+                    <i class="fa fa-sign-out-alt"></i> Logout
+                </a>
+            <?php endif; ?>
         <?php else: ?>
+            <!-- If not logged in, Register | Login -->
             <span class="user-greeting">Menu</span>
             <a href="login/register.php" class="btn-menu btn-menu-primary">Register</a>
             <a href="login/login.php" class="btn-menu btn-menu-secondary">Login</a>
