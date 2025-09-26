@@ -1,4 +1,3 @@
-// Settings/core.php
 <?php
 session_start();
 
@@ -27,7 +26,7 @@ function getUserID(){
 //function to check for role (admin, customer, etc)
 function isAdmin(){
     if (isLoggedIn()){
-        return $_SESSION['user_role'] == 2;
+        return $_SESSION['user_role'] == 1;
     }
 }
 
