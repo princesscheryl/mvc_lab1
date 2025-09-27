@@ -32,7 +32,7 @@ class Category extends db_connection
     //retrieve all categories from database to display the category list on admin page
     public function get()
     {
-        $sql="SELECT * FROM categories ORDER BY cat_name ASC";
+        $sql="SELECT * FROM categories ORDER BY cat_id ASC";
         return $this->db_fetch_all($sql);
     }
     
