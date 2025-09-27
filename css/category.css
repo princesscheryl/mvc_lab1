@@ -99,6 +99,14 @@ h1{
     z-index:1;
 }
 
+.card-header h5{
+    margin:0;
+    font-weight:600;
+    font-size:1.3rem;
+    position:relative;
+    z-index:1;
+}
+
 .card-header i{
     margin-right:10px;
     font-size:1.2rem;
@@ -136,6 +144,13 @@ h1{
 .form-control:hover{
     border-color:var(--secondary-blue);
     background:var(--white);
+}
+
+.form-control[disabled]{
+    background:var(--light-gray);
+    color:#6c757d;
+    border-color:#dee2e6;
+    cursor:not-allowed;
 }
 
 .btn-primary{
@@ -276,6 +291,23 @@ h1{
     box-shadow:0 4px 15px rgba(220,53,69,0.4);
 }
 
+.modal{
+    z-index:1055;
+}
+
+.modal-backdrop{
+    z-index:1050;
+}
+
+.modal-dialog{
+    margin:1.75rem auto;
+    max-width:500px;
+}
+
+.modal.show .modal-dialog{
+    transform:none;
+}
+
 .modal-content{
     border:none;
     border-radius:var(--border-radius);
@@ -291,6 +323,18 @@ h1{
 
 .modal-title{
     font-weight:600;
+}
+
+.modal-body{
+    padding:2rem;
+    background:var(--white);
+}
+
+.modal-footer{
+    padding:1rem 2rem;
+    background:var(--light-gray);
+    border:none;
+    border-radius:0 0 var(--border-radius) var(--border-radius);
 }
 
 .btn-close{
@@ -348,6 +392,11 @@ h1{
     .btn-sm{
         padding:4px 8px;
         font-size:0.8rem;
+    }
+    
+    .modal-dialog{
+        margin:1rem;
+        max-width:calc(100% - 2rem);
     }
 }
 
