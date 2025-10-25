@@ -21,3 +21,6 @@ fontawesome/
 
 # Cache
 *.cache
+
+# Documentation
+CLAUDE.md

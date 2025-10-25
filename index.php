@@ -20,9 +20,15 @@ require_once 'settings/core.php';
                 <?php echo htmlspecialchars($_SESSION['user_name']); ?>
             </span>
             <?php if($_SESSION['user_role']==1): ?>
-                <!-- If logged in and an admin, Logout | Category -->
+                <!-- If logged in and an admin, Logout | Category | Brand | Add Product -->
                 <a href="admin/category.php" class="btn-menu btn-menu-primary">
                     <i class="fa fa-tags"></i> Category
+                </a>
+                <a href="admin/brand.php" class="btn-menu btn-menu-primary">
+                    <i class="fa fa-bookmark"></i> Brand
+                </a>
+                <a href="admin/product.php" class="btn-menu btn-menu-primary">
+                    <i class="fa fa-plus-circle"></i> Add Product
                 </a>
                 <a href="login/logout.php" class="btn-menu btn-menu-logout">
                     <i class="fa fa-sign-out-alt"></i> Logout
