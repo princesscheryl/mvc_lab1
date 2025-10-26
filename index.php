@@ -1,6 +1,17 @@
 <?php
 session_start();
 require_once 'settings/core.php';
+require_once 'controllers/product_controller.php';
+require_once 'controllers/category_controller.php';
+
+// Get data for homepage
+$featured_products = view_all_products_ctr();
+$categories = get_all_categories_ctr();
+
+// Limit to 6 featured products
+if ($featured_products && count($featured_products) > 6) {
+    $featured_products = array_slice($featured_products, 0, 6);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,6 +24,14 @@ require_once 'settings/core.php';
     <link href="css/index.css" rel="stylesheet">
 </head>
 <body>
+    <!-- Animated Background Elements -->
+    <div class="animated-bg">
+        <div class="dots-pattern"></div>
+        <div class="parallax-shape parallax-shape-1"></div>
+        <div class="parallax-shape parallax-shape-2"></div>
+        <div class="parallax-shape parallax-shape-3"></div>
+    </div>
+
     <!-- Navigation Header -->
     <nav class="main-nav">
         <div class="nav-container">
@@ -257,8 +276,124 @@ require_once 'settings/core.php';
             </div>
         </section>
 
+        <!-- Stats Section with Counter Animation -->
+        <section class="stats-section fade-in-section">
+            <div class="stats-container">
+                <div class="stat-item">
+                    <div class="stat-number" data-target="15000">0</div>
+                    <div class="stat-label">Happy Customers</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-target="<?php echo $featured_products ? count(view_all_products_ctr()) : 500; ?>">0</div>
+                    <div class="stat-label">Products</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-target="<?php echo $categories ? count($categories) : 20; ?>">0</div>
+                    <div class="stat-label">Categories</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-target="99">0</div>
+                    <div class="stat-label">Satisfaction Rate</div>
+                    <span class="stat-suffix">%</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Shop by Category Section -->
+        <?php if($categories && count($categories) > 0): ?>
+        <section class="categories-section fade-in-section">
+            <div class="categories-container">
+                <h2 class="section-title">Shop by Category</h2>
+                <p class="section-subtitle">Explore our wide range of product categories</p>
+                <div class="categories-grid">
+                    <?php
+                    $category_icons = [
+                        'Electronics' => 'fa-laptop',
+                        'Fashion' => 'fa-tshirt',
+                        'Home Decor' => 'fa-home',
+                        'Home & Outdoors' => 'fa-running',
+                        'Sports' => 'fa-futbol',
+                        'Books' => 'fa-book'
+                    ];
+                    $count = 0;
+                    foreach($categories as $category):
+                        if($count >= 6) break;
+                        $cat_name = $category['cat_name'];
+                        $icon = 'fa-tag'; // default icon
+                        foreach($category_icons as $key => $val) {
+                            if(stripos($cat_name, $key) !== false) {
+                                $icon = $val;
+                                break;
+                            }
+                        }
+                        $count++;
+                    ?>
+                    <a href="view/all_product.php?category=<?php echo $category['cat_id']; ?>" class="category-card ripple-effect">
+                        <div class="category-icon">
+                            <i class="fa <?php echo $icon; ?>"></i>
+                        </div>
+                        <h3 class="category-name"><?php echo htmlspecialchars($category['cat_name']); ?></h3>
+                        <div class="category-arrow">
+                            <i class="fa fa-arrow-right"></i>
+                        </div>
+                    </a>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </section>
+        <?php endif; ?>
+
+        <!-- Featured Products Section -->
+        <?php if($featured_products && count($featured_products) > 0): ?>
+        <section class="featured-products-section fade-in-section">
+            <div class="featured-container">
+                <h2 class="section-title">Featured Products</h2>
+                <p class="section-subtitle">Discover our top picks just for you</p>
+                <div class="products-grid">
+                    <?php foreach($featured_products as $product): ?>
+                    <div class="product-card-home ripple-effect">
+                        <a href="view/single_product.php?id=<?php echo $product['product_id']; ?>" class="product-link">
+                            <?php if (!empty($product['product_image'])): ?>
+                                <div class="product-image-wrapper">
+                                    <img src="<?php echo htmlspecialchars($product['product_image']); ?>"
+                                         alt="<?php echo htmlspecialchars($product['product_title']); ?>"
+                                         class="product-img">
+                                </div>
+                            <?php else: ?>
+                                <div class="product-image-placeholder-home">
+                                    <i class="fa fa-image fa-3x"></i>
+                                </div>
+                            <?php endif; ?>
+                            <div class="product-details">
+                                <div class="product-category-badge">
+                                    <?php echo htmlspecialchars($product['cat_name']); ?>
+                                </div>
+                                <h3 class="product-title-home"><?php echo htmlspecialchars($product['product_title']); ?></h3>
+                                <div class="product-brand-home">
+                                    <i class="fa fa-bookmark"></i> <?php echo htmlspecialchars($product['brand_name']); ?>
+                                </div>
+                                <div class="product-price-home">
+                                    $<?php echo number_format($product['product_price'], 2); ?>
+                                </div>
+                            </div>
+                        </a>
+                        <button class="btn-add-cart-home ripple-btn" onclick="event.preventDefault(); alert('Add to cart functionality coming soon!');">
+                            <i class="fa fa-shopping-cart"></i> Add to Cart
+                        </button>
+                    </div>
+                    <?php endforeach; ?>
+                </div>
+                <div class="view-all-container">
+                    <a href="view/all_product.php" class="btn-view-all ripple-btn">
+                        View All Products <i class="fa fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+        <?php endif; ?>
+
         <!-- Features Section -->
-        <section class="features-section">
+        <section class="features-section fade-in-section">
             <div class="features-container">
                 <h2 class="section-title">Why choose our platform?</h2>
                 <div class="features-grid">
@@ -342,6 +477,101 @@ require_once 'settings/core.php';
 
             // Change text every 3 seconds
             setInterval(changeCarouselText, 3000);
+        }
+
+        // ===== SCROLL-TRIGGERED FADE-IN ANIMATIONS =====
+        const fadeInObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in-visible');
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        });
+
+        document.querySelectorAll('.fade-in-section').forEach(section => {
+            fadeInObserver.observe(section);
+        });
+
+        // ===== COUNTER ANIMATION =====
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !entry.target.classList.contains('counted')) {
+                    entry.target.classList.add('counted');
+                    animateCounter(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        document.querySelectorAll('.stat-number').forEach(counter => {
+            counterObserver.observe(counter);
+        });
+
+        function animateCounter(element) {
+            const target = parseInt(element.getAttribute('data-target'));
+            const duration = 2000;
+            const increment = target / (duration / 16);
+            let current = 0;
+
+            const updateCounter = () => {
+                current += increment;
+                if (current < target) {
+                    element.textContent = Math.floor(current).toLocaleString();
+                    requestAnimationFrame(updateCounter);
+                } else {
+                    element.textContent = target.toLocaleString();
+                }
+            };
+            updateCounter();
+        }
+
+        // ===== PARALLAX SCROLL EFFECT =====
+        let ticking = false;
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    const scrolled = window.pageYOffset;
+                    const parallaxShapes = document.querySelectorAll('.parallax-shape');
+
+                    parallaxShapes.forEach((shape, index) => {
+                        const speed = 0.3 + (index * 0.1);
+                        const yPos = -(scrolled * speed);
+                        shape.style.transform = `translateY(${yPos}px)`;
+                    });
+
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        });
+
+        // ===== RIPPLE EFFECT ON CLICK =====
+        document.querySelectorAll('.ripple-btn, .ripple-effect').forEach(element => {
+            element.addEventListener('click', function(e) {
+                const ripple = document.createElement('span');
+                ripple.classList.add('ripple');
+
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+
+                ripple.style.width = ripple.style.height = size + 'px';
+                ripple.style.left = x + 'px';
+                ripple.style.top = y + 'px';
+
+                this.appendChild(ripple);
+
+                setTimeout(() => ripple.remove(), 600);
+            });
+        });
+
+        // ===== REDUCED MOTION SUPPORT =====
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+        if (prefersReducedMotion.matches) {
+            document.documentElement.style.setProperty('--animation-duration', '0.01ms');
         }
     </script>
 </body>
