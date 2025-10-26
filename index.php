@@ -42,73 +42,142 @@ require_once 'settings/core.php';
     <?php if(isset($_SESSION['user_id'])): ?>
         <!-- Logged in user dashboard -->
         <section class="hero-section hero-dashboard">
-            <div class="hero-container">
-                <div class="dashboard-welcome">
-                    <h1>Welcome back, <?php echo htmlspecialchars($_SESSION['user_name']); ?>! 👋</h1>
-                    <p class="hero-subtitle">Ready to manage your platform</p>
-                </div>
+            <div class="hero-container-logged">
+                <div class="hero-content-logged">
+                    <h1 class="hero-title-logged">
+                        Welcome back, <span class="highlight"><?php echo htmlspecialchars($_SESSION['user_name']); ?>!</span> 👋
+                    </h1>
+                    <p class="hero-subtitle">
+                        <?php echo $_SESSION['user_role']==1 ? 'Manage your products and grow your business' : 'Discover amazing products from top brands'; ?>
+                    </p>
 
-                <div class="dashboard-grid">
-                    <div class="dashboard-card">
-                        <div class="dashboard-card-icon">
-                            <i class="fa fa-envelope"></i>
-                        </div>
-                        <div class="dashboard-card-content">
-                            <h4>Email</h4>
-                            <p><?php echo htmlspecialchars($_SESSION['user_email']); ?></p>
-                        </div>
-                    </div>
-
-                    <div class="dashboard-card">
-                        <div class="dashboard-card-icon">
-                            <i class="fa fa-phone"></i>
-                        </div>
-                        <div class="dashboard-card-content">
-                            <h4>Contact</h4>
-                            <p><?php echo htmlspecialchars($_SESSION['user_contact']); ?></p>
-                        </div>
-                    </div>
-
-                    <div class="dashboard-card">
-                        <div class="dashboard-card-icon">
-                            <i class="fa fa-id-badge"></i>
-                        </div>
-                        <div class="dashboard-card-content">
-                            <h4>Role</h4>
-                            <p><?php echo $_SESSION['user_role']==1?'Restaurant Owner':'Customer'; ?></p>
-                        </div>
-                    </div>
-
-                    <div class="dashboard-card">
-                        <div class="dashboard-card-icon">
-                            <i class="fa fa-map-marker-alt"></i>
-                        </div>
-                        <div class="dashboard-card-content">
-                            <h4>Location</h4>
-                            <p><?php echo htmlspecialchars($_SESSION['user_city'].', '.$_SESSION['user_country']); ?></p>
-                        </div>
-                    </div>
-                </div>
-
-                <?php if($_SESSION['user_role']==1): ?>
-                <div class="quick-actions">
-                    <h3>Quick Actions</h3>
-                    <div class="action-cards">
-                        <a href="admin/category.php" class="action-card">
+                    <?php if($_SESSION['user_role']==1): ?>
+                    <!-- Admin Quick Actions -->
+                    <div class="admin-actions-hero">
+                        <a href="admin/category.php" class="hero-action-btn">
                             <i class="fa fa-tags"></i>
-                            <span>Manage Categories</span>
+                            <span>Categories</span>
                         </a>
-                        <a href="admin/brand.php" class="action-card">
+                        <a href="admin/brand.php" class="hero-action-btn">
                             <i class="fa fa-bookmark"></i>
-                            <span>Manage Brands</span>
+                            <span>Brands</span>
                         </a>
-                        <a href="admin/product.php" class="action-card">
+                        <a href="admin/product.php" class="hero-action-btn">
                             <i class="fa fa-box"></i>
-                            <span>Manage Products</span>
+                            <span>Products</span>
                         </a>
                     </div>
+                    <?php else: ?>
+                    <!-- Customer Search -->
+                    <div class="hero-search">
+                        <input type="text" placeholder="Search for products..." class="search-input">
+                        <button class="search-btn">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+                    <?php endif; ?>
+
+                    <!-- User Info Grid -->
+                    <div class="user-info-grid">
+                        <div class="user-info-item-compact">
+                            <i class="fa fa-envelope"></i>
+                            <span><?php echo htmlspecialchars($_SESSION['user_email']); ?></span>
+                        </div>
+                        <div class="user-info-item-compact">
+                            <i class="fa fa-phone"></i>
+                            <span><?php echo htmlspecialchars($_SESSION['user_contact']); ?></span>
+                        </div>
+                        <div class="user-info-item-compact">
+                            <i class="fa fa-map-marker-alt"></i>
+                            <span><?php echo htmlspecialchars($_SESSION['user_city'].', '.$_SESSION['user_country']); ?></span>
+                        </div>
+                    </div>
                 </div>
-                <?php endif; ?>
+
+                <!-- Pinterest-style Image Carousel for logged-in users too -->
+                <div class="pinterest-carousel">
+                    <div class="carousel-column carousel-column-1">
+                        <div class="carousel-image">
+                            <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=500&fit=crop" alt="Headphones">
+                        </div>
+                        <div class="carousel-image">
+                            <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&h=600&fit=crop" alt="Watch">
+                        </div>
+                        <div class="carousel-image">
+                            <img src="https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=400&h=400&fit=crop" alt="Sunglasses">
+                        </div>
+                    </div>
+                    <div class="carousel-column carousel-column-2">
+                        <div class="carousel-image">
+                            <img src="https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=400&h=550&fit=crop" alt="Shoes">
+                        </div>
+                        <div class="carousel-image">
+                            <img src="https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=400&h=450&fit=crop" alt="Sneakers">
+                        </div>
+                        <div class="carousel-image">
+                            <img src="https://images.unsplash.com/photo-1585386959984-a4155224a1ad?w=400&h=500&fit=crop" alt="Perfume">
+                        </div>
+                    </div>
+                    <div class="carousel-column carousel-column-3">
+                        <div class="carousel-image">
+                            <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&h=600&fit=crop" alt="Red Shoes">
+                        </div>
+                        <div class="carousel-image">
+                            <img src="https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=400&h=400&fit=crop" alt="Backpack">
+                        </div>
+                        <div class="carousel-image">
+                            <img src="https://images.unsplash.com/photo-1611312449408-fcece27cdbb7?w=400&h=550&fit=crop" alt="Camera">
+                        </div>
+                    </div>
+                    <div class="carousel-column carousel-column-4">
+                        <div class="carousel-image">
+                            <img src="https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=400&h=500&fit=crop" alt="Smart Watch">
+                        </div>
+                        <div class="carousel-image">
+                            <img src="https://images.unsplash.com/photo-1598532163257-ae3c6b2524b6?w=400&h=600&fit=crop" alt="Glasses">
+                        </div>
+                        <div class="carousel-image">
+                            <img src="https://images.unsplash.com/photo-1525904097878-94fb15835963?w=400&h=450&fit=crop" alt="Coffee">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Products Section (for logged-in users) -->
+        <section class="featured-section">
+            <div class="features-container">
+                <h2 class="section-title"><?php echo $_SESSION['user_role']==1 ? 'Platform Features' : 'Why Shop With Us?'; ?></h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fa fa-shield-alt"></i>
+                        </div>
+                        <h3>Secure Platform</h3>
+                        <p>Your data and transactions are protected with industry-leading security</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fa fa-truck"></i>
+                        </div>
+                        <h3>Fast Delivery</h3>
+                        <p>Get your products delivered quickly and efficiently</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fa fa-star"></i>
+                        </div>
+                        <h3>Quality Products</h3>
+                        <p>Only the best products from trusted brands</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fa fa-headset"></i>
+                        </div>
+                        <h3>24/7 Support</h3>
+                        <p>Our team is here to help you anytime, anywhere</p>
+                    </div>
+                </div>
             </div>
         </section>
     <?php else: ?>
