@@ -41,50 +41,66 @@ if (isset($_GET['edit']) && intval($_GET['edit']) > 0) {
     <title><?php echo $editing ? 'Edit' : 'Add'; ?> Product</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="../css/index.css" rel="stylesheet">
     <style>
         body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%);
             min-height: 100vh;
-            padding: 20px 0;
+            padding: 40px 20px;
         }
         .container {
             max-width: 1400px;
         }
         h1 {
-            color: white;
+            color: var(--gray-900);
             margin-bottom: 10px;
+            font-weight: 800;
         }
         .welcome-text {
-            color: rgba(255, 255, 255, 0.9);
-            margin-bottom: 30px;
+            color: var(--gray-600);
+            margin-bottom: 40px;
+            font-size: 1.1rem;
         }
         .card {
-            border: none;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            background: white;
+            border: 1px solid var(--gray-200);
+            border-radius: 16px;
+            box-shadow: var(--shadow-md);
             margin-bottom: 30px;
+            transition: all 0.3s ease;
+        }
+        .card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-2px);
         }
         .card-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
             color: white;
-            border-radius: 15px 15px 0 0 !important;
-            padding: 20px;
+            border-radius: 16px 16px 0 0 !important;
+            padding: 20px 24px;
+            border: none;
         }
         .card-header h3 {
             margin: 0;
             font-size: 1.3rem;
+            font-weight: 600;
+        }
+        .card-body {
+            padding: 24px;
         }
         .product-card {
-            border: 1px solid #ddd;
-            border-radius: 10px;
+            border: 1px solid var(--gray-200);
+            border-radius: 12px;
             padding: 15px;
             margin-bottom: 20px;
             background: white;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-sm);
         }
         .product-card:hover {
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: var(--shadow-md);
             transform: translateY(-2px);
+            border-color: var(--primary-light);
         }
         .product-image {
             width: 100%;
@@ -95,30 +111,84 @@ if (isset($_GET['edit']) && intval($_GET['edit']) > 0) {
         .product-image-placeholder {
             width: 100%;
             height: 200px;
-            background: #f0f0f0;
+            background: var(--gray-100);
             border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #999;
+            color: var(--gray-400);
+            border: 2px dashed var(--gray-300);
         }
         .navigation-buttons {
-            margin-top: 30px;
+            margin-top: 40px;
             display: flex;
-            gap: 10px;
+            gap: 12px;
+            flex-wrap: wrap;
         }
         .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--primary);
             border: none;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
         }
         .btn-primary:hover {
-            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+            background: var(--primary-dark);
+            box-shadow: 0 6px 16px rgba(99, 102, 241, 0.4);
+        }
+        .btn-warning {
+            background: var(--accent);
+            border: none;
+            color: white;
+        }
+        .btn-warning:hover {
+            background: #f97316;
+            color: white;
+        }
+        .btn-danger {
+            background: var(--danger);
+            border: none;
+        }
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+        .btn-secondary {
+            background: var(--gray-200);
+            color: var(--gray-700);
+            border: none;
+        }
+        .btn-secondary:hover {
+            background: var(--gray-300);
+            color: var(--gray-800);
+        }
+        .btn-info {
+            background: var(--primary-light);
+            border: none;
+        }
+        .btn-info:hover {
+            background: var(--primary);
         }
         .image-preview {
             max-width: 200px;
             max-height: 200px;
             margin-top: 10px;
             border-radius: 10px;
+            border: 1px solid var(--gray-200);
+        }
+        .form-label {
+            font-weight: 600;
+            color: var(--gray-700);
+            margin-bottom: 8px;
+        }
+        .form-control, .form-select {
+            border: 1px solid var(--gray-300);
+            border-radius: 8px;
+            padding: 10px 14px;
+        }
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+        .text-primary {
+            color: var(--primary) !important;
         }
     </style>
 </head>
