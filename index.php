@@ -1,5 +1,4 @@
 <?php
-session_start();
 require_once 'settings/core.php';
 require_once 'controllers/product_controller.php';
 require_once 'controllers/category_controller.php';
