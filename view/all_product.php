@@ -15,7 +15,14 @@ $filtered_products = $products;
 $active_category = isset($_GET['category']) ? intval($_GET['category']) : 0;
 $active_brand = isset($_GET['brand']) ? intval($_GET['brand']) : 0;
 
-if ($active_category > 0) {
+// Filter by both category and brand if both are selected
+if ($active_category > 0 && $active_brand > 0) {
+    $filtered_products = filter_products_by_category_ctr($active_category);
+    // Further filter by brand
+    $filtered_products = array_filter($filtered_products, function($product) use ($active_brand) {
+        return $product['product_brand'] == $active_brand;
+    });
+} elseif ($active_category > 0) {
     $filtered_products = filter_products_by_category_ctr($active_category);
 } elseif ($active_brand > 0) {
     $filtered_products = filter_products_by_brand_ctr($active_brand);
