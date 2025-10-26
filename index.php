@@ -20,6 +20,7 @@ require_once 'settings/core.php';
                 <a href="index.php" class="logo">shopify<span class="logo-dot">.</span></a>
             </div>
             <div class="nav-right">
+                <a href="view/all_product.php" class="nav-link">All Products</a>
                 <?php if(isset($_SESSION['user_id'])): ?>
                     <span class="nav-user">
                         <i class="fa fa-user-circle"></i>
@@ -28,7 +29,7 @@ require_once 'settings/core.php';
                     <?php if($_SESSION['user_role']==1): ?>
                         <a href="admin/category.php" class="nav-link">Category</a>
                         <a href="admin/brand.php" class="nav-link">Brand</a>
-                        <a href="admin/product.php" class="nav-link">Products</a>
+                        <a href="admin/product.php" class="nav-link">Manage Products</a>
                     <?php endif; ?>
                     <a href="login/logout.php" class="btn-nav btn-nav-logout">Logout</a>
                 <?php else: ?>
@@ -69,12 +70,12 @@ require_once 'settings/core.php';
                     </div>
                     <?php else: ?>
                     <!-- Customer Search -->
-                    <div class="hero-search">
-                        <input type="text" placeholder="Search for products..." class="search-input">
-                        <button class="search-btn">
+                    <form action="view/product_search_result.php" method="GET" class="hero-search">
+                        <input type="text" name="q" placeholder="Search for products..." class="search-input" required>
+                        <button type="submit" class="search-btn">
                             <i class="fa fa-search"></i>
                         </button>
-                    </div>
+                    </form>
                     <?php endif; ?>
 
                     <!-- User Info Grid -->
@@ -191,12 +192,12 @@ require_once 'settings/core.php';
                     <p class="hero-subtitle">
                         Discover amazing products from top brands and categories
                     </p>
-                    <div class="hero-search">
-                        <input type="text" placeholder="Search for products, brands, or categories..." class="search-input">
-                        <button class="search-btn">
+                    <form action="view/product_search_result.php" method="GET" class="hero-search">
+                        <input type="text" name="q" placeholder="Search for products, brands, or categories..." class="search-input" required>
+                        <button type="submit" class="search-btn">
                             <i class="fa fa-search"></i>
                         </button>
-                    </div>
+                    </form>
                     <div class="hero-tags">
                         <span>Popular:</span>
                         <a href="#" class="tag">Electronics</a>

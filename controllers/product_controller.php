@@ -96,4 +96,39 @@ function search_products_ctr($keyword)
         return false;
     }
 }
+
+// Retrieve all products for display
+function view_all_products_ctr()
+{
+    $product = new Product();
+    return $product->view_all_products();
+}
+
+// Get detailed information for a single product
+function view_single_product_ctr($id)
+{
+    $product = new Product();
+    return $product->view_single_product($id);
+}
+
+// Filter products by category for organized browsing
+function filter_products_by_category_ctr($cat_id)
+{
+    $product = new Product();
+    return $product->filter_products_by_category($cat_id);
+}
+
+// Filter products by brand for brand-specific browsing
+function filter_products_by_brand_ctr($brand_id)
+{
+    $product = new Product();
+    return $product->filter_products_by_brand($brand_id);
+}
+
+// Advanced search combining multiple criteria for precise results
+function composite_search_ctr($query = '', $cat_id = null, $brand_id = null, $min_price = null, $max_price = null)
+{
+    $product = new Product();
+    return $product->composite_search($query, $cat_id, $brand_id, $min_price, $max_price);
+}
 ?>
