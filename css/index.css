@@ -143,7 +143,7 @@ body {
 /* Hero Section */
 .hero-section {
     background: linear-gradient(135deg, #f7f9fc 0%, #ffffff 100%);
-    padding: 80px 24px;
+    padding: 80px 24px 120px;
     position: relative;
     overflow: hidden;
 }
@@ -166,10 +166,14 @@ body {
     margin: 0 auto;
     position: relative;
     z-index: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
 }
 
 .hero-content {
-    max-width: 750px;
+    max-width: 650px;
 }
 
 .hero-title {
@@ -262,6 +266,80 @@ body {
     border-color: var(--primary);
     color: var(--primary);
     transform: translateY(-2px);
+}
+
+/* Carousel Text Animation */
+.carousel-text {
+    transition: opacity 0.3s ease-in-out, color 0.3s ease-in-out;
+    display: inline-block;
+}
+
+/* Pinterest-style Image Carousel */
+.pinterest-carousel {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    max-width: 650px;
+    height: 600px;
+    overflow: hidden;
+    position: relative;
+}
+
+.carousel-column {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    animation: scrollUp 20s linear infinite;
+}
+
+.carousel-column-1 {
+    animation-delay: 0s;
+}
+
+.carousel-column-2 {
+    animation-delay: -5s;
+}
+
+.carousel-column-3 {
+    animation-delay: -10s;
+}
+
+.carousel-column-4 {
+    animation-delay: -15s;
+}
+
+@keyframes scrollUp {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(-50%);
+    }
+}
+
+.carousel-image {
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.carousel-image:hover {
+    transform: scale(1.05);
+    box-shadow: var(--shadow-lg);
+}
+
+.carousel-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Pause animation on hover */
+.pinterest-carousel:hover .carousel-column {
+    animation-play-state: paused;
 }
 
 /* Dashboard Hero */
@@ -533,6 +611,15 @@ body {
 
     .nav-link {
         font-size: 0.9rem;
+    }
+
+    .hero-container {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .pinterest-carousel {
+        display: none;
     }
 
     .hero-title {

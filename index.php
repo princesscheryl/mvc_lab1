@@ -117,7 +117,7 @@ require_once 'settings/core.php';
             <div class="hero-container">
                 <div class="hero-content">
                     <h1 class="hero-title">
-                        Find the perfect <span class="highlight">products</span> for your business
+                        Get your next <span class="highlight carousel-text" id="carouselText">amazing product</span>
                     </h1>
                     <p class="hero-subtitle">
                         Discover amazing products from top brands and categories
@@ -134,6 +134,54 @@ require_once 'settings/core.php';
                         <a href="#" class="tag">Fashion</a>
                         <a href="#" class="tag">Home & Garden</a>
                         <a href="#" class="tag">Sports</a>
+                    </div>
+                </div>
+
+                <!-- Pinterest-style Image Carousel -->
+                <div class="pinterest-carousel">
+                    <div class="carousel-column carousel-column-1">
+                        <div class="carousel-image">
+                            <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=500&fit=crop" alt="Headphones">
+                        </div>
+                        <div class="carousel-image">
+                            <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&h=600&fit=crop" alt="Watch">
+                        </div>
+                        <div class="carousel-image">
+                            <img src="https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=400&h=400&fit=crop" alt="Sunglasses">
+                        </div>
+                    </div>
+                    <div class="carousel-column carousel-column-2">
+                        <div class="carousel-image">
+                            <img src="https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=400&h=550&fit=crop" alt="Shoes">
+                        </div>
+                        <div class="carousel-image">
+                            <img src="https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=400&h=450&fit=crop" alt="Sneakers">
+                        </div>
+                        <div class="carousel-image">
+                            <img src="https://images.unsplash.com/photo-1585386959984-a4155224a1ad?w=400&h=500&fit=crop" alt="Perfume">
+                        </div>
+                    </div>
+                    <div class="carousel-column carousel-column-3">
+                        <div class="carousel-image">
+                            <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&h=600&fit=crop" alt="Red Shoes">
+                        </div>
+                        <div class="carousel-image">
+                            <img src="https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=400&h=400&fit=crop" alt="Backpack">
+                        </div>
+                        <div class="carousel-image">
+                            <img src="https://images.unsplash.com/photo-1611312449408-fcece27cdbb7?w=400&h=550&fit=crop" alt="Camera">
+                        </div>
+                    </div>
+                    <div class="carousel-column carousel-column-4">
+                        <div class="carousel-image">
+                            <img src="https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=400&h=500&fit=crop" alt="Smart Watch">
+                        </div>
+                        <div class="carousel-image">
+                            <img src="https://images.unsplash.com/photo-1598532163257-ae3c6b2524b6?w=400&h=600&fit=crop" alt="Glasses">
+                        </div>
+                        <div class="carousel-image">
+                            <img src="https://images.unsplash.com/photo-1525904097878-94fb15835963?w=400&h=450&fit=crop" alt="Coffee">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -194,5 +242,37 @@ require_once 'settings/core.php';
     <?php endif; ?>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Text carousel that changes every few seconds
+        const carouselTexts = [
+            { text: 'amazing product', color: '#1dbf73' },
+            { text: 'fashion inspiration', color: '#ff6b6b' },
+            { text: 'tech gadget', color: '#3b82f6' },
+            { text: 'home décor idea', color: '#8b5cf6' },
+            { text: 'lifestyle upgrade', color: '#f59e0b' }
+        ];
+
+        let currentIndex = 0;
+        const carouselTextElement = document.getElementById('carouselText');
+
+        if (carouselTextElement) {
+            function changeCarouselText() {
+                // Fade out
+                carouselTextElement.style.opacity = '0';
+
+                setTimeout(() => {
+                    currentIndex = (currentIndex + 1) % carouselTexts.length;
+                    carouselTextElement.textContent = carouselTexts[currentIndex].text;
+                    carouselTextElement.style.color = carouselTexts[currentIndex].color;
+
+                    // Fade in
+                    carouselTextElement.style.opacity = '1';
+                }, 300);
+            }
+
+            // Change text every 3 seconds
+            setInterval(changeCarouselText, 3000);
+        }
+    </script>
 </body>
 </html>
