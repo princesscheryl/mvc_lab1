@@ -6,7 +6,7 @@ function validateCategoryName(name){
     if(name.trim().length>100){
         return {valid:false,message:'Category name must be less than 100 characters'};
     }
-    if(!/^[a-zA-Z0-9\s\-\_]+$/.test(name.trim())){
+    if(!/^[a-zA-Z0-9\s\-\_\&]+$/.test(name.trim())){
         return {valid:false,message:'Category name contains invalid characters'};
     }
     return {valid:true,message:''};
