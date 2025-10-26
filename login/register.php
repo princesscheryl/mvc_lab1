@@ -205,7 +205,7 @@
 
         .form-control:focus {
             border-color: var(--primary);
-            box-shadow: 0 0 0 4px rgba(29, 191, 115, 0.1);
+            box-shadow: 0 0 0 4px rgba(103, 146, 103, 0.1);
             outline: none;
         }
 
@@ -239,7 +239,7 @@
 
         .role-option input[type="radio"]:checked ~ {
             border-color: var(--primary);
-            background: rgba(29, 191, 115, 0.05);
+            background: rgba(103, 146, 103, 0.05);
         }
 
         .role-content {
@@ -261,7 +261,7 @@
             font-weight: 700;
             font-size: 1.1rem;
             transition: all 0.3s;
-            box-shadow: 0 4px 12px rgba(29, 191, 115, 0.3);
+            box-shadow: 0 4px 12px rgba(103, 146, 103, 0.3);
             position: relative;
             overflow: hidden;
         }
@@ -286,7 +286,7 @@
 
         .btn-register:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(29, 191, 115, 0.4);
+            box-shadow: 0 8px 24px rgba(103, 146, 103, 0.4);
         }
 
         .auth-footer {
@@ -479,7 +479,7 @@
                     opt.style.background = 'white';
                 });
                 this.style.borderColor = 'var(--primary)';
-                this.style.background = 'rgba(29, 191, 115, 0.05)';
+                this.style.background = 'rgba(103, 146, 103, 0.05)';
             });
         });
 

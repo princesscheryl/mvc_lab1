@@ -156,13 +156,13 @@ $related_products = array_slice($related_products, 0, 4);
             font-weight: 700;
             font-size: 1.2rem;
             transition: all 0.3s;
-            box-shadow: 0 4px 12px rgba(29, 191, 115, 0.3);
+            box-shadow: 0 4px 12px rgba(103, 146, 103, 0.3);
         }
 
         .btn-add-cart-large:hover {
             background: var(--primary-dark);
             transform: translateY(-3px);
-            box-shadow: 0 8px 24px rgba(29, 191, 115, 0.4);
+            box-shadow: 0 8px 24px rgba(103, 146, 103, 0.4);
         }
 
         .btn-back {

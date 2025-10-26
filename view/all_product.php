@@ -180,7 +180,7 @@ $paginated_products = array_slice($filtered_products, $offset, $items_per_page);
         .btn-add-cart:hover {
             background: var(--primary-dark);
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(29, 191, 115, 0.3);
+            box-shadow: 0 4px 12px rgba(103, 146, 103, 0.3);
         }
 
         .pagination {

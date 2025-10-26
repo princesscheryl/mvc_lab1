@@ -315,7 +315,7 @@ require_once 'settings/core.php';
     <script>
         // Text carousel that changes every few seconds
         const carouselTexts = [
-            { text: 'amazing product', color: '#1dbf73' },
+            { text: 'amazing product', color: '#679267' },
             { text: 'fashion inspiration', color: '#ff6b6b' },
             { text: 'tech gadget', color: '#3b82f6' },
             { text: 'home décor idea', color: '#8b5cf6' },

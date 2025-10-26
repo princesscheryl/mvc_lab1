@@ -83,7 +83,7 @@ $paginated_results = array_slice($search_results, $offset, $items_per_page);
 
         .search-input-main:focus {
             border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(29, 191, 115, 0.1);
+            box-shadow: 0 0 0 3px rgba(103, 146, 103, 0.1);
         }
 
         .search-btn-main {
