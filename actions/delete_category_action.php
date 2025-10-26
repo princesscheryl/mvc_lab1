@@ -22,12 +22,16 @@ if(!isAdmin()){
     exit();
 }
 
+// Debug: log what we received
+error_log("DELETE CATEGORY - POST data: " . print_r($_POST, true));
+error_log("DELETE CATEGORY - category_id: " . (isset($_POST['category_id']) ? $_POST['category_id'] : 'NOT SET'));
+
 $cat_id=isset($_POST['category_id'])?(int)$_POST['category_id']:0;
 
 //validate category id
 if($cat_id<=0){
     $response['success']=false;
-    $response['message']='Invalid category ID';
+    $response['message']='Invalid category ID (received: ' . $cat_id . ')';
 }else{
     //delete category using controller
     $deleted=delete_category_ctr($cat_id);
