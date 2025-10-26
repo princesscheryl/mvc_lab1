@@ -57,7 +57,7 @@ $base_upload_dir = __DIR__ . '/../uploads';
 $user_dir = $base_upload_dir . '/u' . $user_id;
 $product_dir = $user_dir . '/p' . $product_id;
 
-// Verify that we're uploading to the correct location
+// Verify that uploading to the correct location
 // All uploads must be inside the uploads/ directory
 if (strpos(realpath($base_upload_dir), realpath(__DIR__ . '/../uploads')) !== 0 && realpath($base_upload_dir) !== realpath(__DIR__ . '/../uploads')) {
     echo json_encode(['success' => false, 'message' => 'Invalid upload directory']);
