@@ -1,4 +1,8 @@
 <?php
+// Enable error reporting for debugging
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 session_start();
 header('Content-Type: application/json');
 
@@ -7,6 +11,10 @@ require_once(__DIR__ . '/../controllers/cart_controller.php');
 
 // Initialize response array
 $response = array();
+
+// Debug: Log what we received
+error_log("POST data: " . print_r($_POST, true));
+error_log("REQUEST data: " . print_r($_REQUEST, true));
 
 // Get the current user ID (0 if not logged in)
 $customer_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 0;
@@ -18,6 +26,10 @@ $ip_address = $_SERVER['REMOTE_ADDR'];
 if (!isset($_POST['product_id']) || !isset($_POST['quantity'])) {
     $response['success'] = false;
     $response['message'] = 'Product ID and quantity are required';
+    $response['debug'] = array(
+        'post' => $_POST,
+        'customer_id' => $customer_id
+    );
     echo json_encode($response);
     exit();
 }
