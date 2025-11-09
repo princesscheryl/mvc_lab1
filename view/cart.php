@@ -328,7 +328,7 @@ $total = $subtotal + $tax;
                                 <!-- Product Image -->
                                 <div>
                                     <?php if (!empty($item['product_image'])): ?>
-                                        <img src="../images/<?php echo htmlspecialchars($item['product_image']); ?>"
+                                        <img src="../<?php echo htmlspecialchars($item['product_image']); ?>"
                                              alt="<?php echo htmlspecialchars($item['product_title']); ?>"
                                              class="cart-item-image"
                                              onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22120%22 height=%22120%22%3E%3Crect fill=%22%23f0f0f0%22 width=%22120%22 height=%22120%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%22%23999%22 font-size=%2214%22%3ENo Image%3C/text%3E%3C/svg%3E';">

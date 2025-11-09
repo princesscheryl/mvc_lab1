@@ -323,7 +323,7 @@ $paginated_products = array_slice($filtered_products, $offset, $items_per_page);
                                 <i class="fa fa-bookmark"></i> <?php echo htmlspecialchars($product['brand_name']); ?>
                             </div>
                             <div class="product-price">
-                                $<?php echo number_format($product['product_price'], 2); ?>
+                                GHS <?php echo number_format($product['product_price'], 2); ?>
                             </div>
                             <button class="btn-add-cart add-to-cart-btn" data-product-id="<?php echo $product['product_id']; ?>">
                                 <i class="fa fa-shopping-cart"></i> Add to Cart

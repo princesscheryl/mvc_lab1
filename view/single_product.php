@@ -311,7 +311,7 @@ $related_products = array_slice($related_products, 0, 4);
                     </div>
 
                     <div class="product-price-main">
-                        $<?php echo number_format($product['product_price'], 2); ?>
+                        GHS <?php echo number_format($product['product_price'], 2); ?>
                     </div>
 
                     <?php if (!empty($product['product_desc'])): ?>
@@ -336,7 +336,7 @@ $related_products = array_slice($related_products, 0, 4);
                         </div>
                         <div class="info-item">
                             <div class="info-label">Price</div>
-                            <div class="info-value">$<?php echo number_format($product['product_price'], 2); ?></div>
+                            <div class="info-value">GHS <?php echo number_format($product['product_price'], 2); ?></div>
                         </div>
                     </div>
 
@@ -396,7 +396,7 @@ $related_products = array_slice($related_products, 0, 4);
                                         </a>
                                     </h5>
                                     <p style="color: var(--primary); font-weight: 700; font-size: 1.2rem; margin: 0;">
-                                        $<?php echo number_format($related['product_price'], 2); ?>
+                                        GHS <?php echo number_format($related['product_price'], 2); ?>
                                     </p>
                                 </div>
                             </div>
