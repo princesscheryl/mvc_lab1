@@ -275,7 +275,7 @@ $total = $subtotal + $tax;
                 <a href="../index.php" class="logo">shopify<span class="logo-dot">.</span></a>
             </div>
             <div class="nav-right">
-                <a href="all_product.php" class="nav-link">Products</a>
+                <a href="all_product.php" class="nav-link">All Products</a>
                 <a href="cart.php" class="nav-link" style="position: relative; margin-right: 20px;">
                     <i class="fa fa-shopping-cart"></i> Cart
                     <span class="cart-count" style="position: absolute; top: -8px; right: -10px; background: #e74c3c; color: white; border-radius: 50%; padding: 2px 6px; font-size: 12px; font-weight: bold;"><?php echo count($cart_items); ?></span>
