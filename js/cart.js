@@ -5,12 +5,14 @@
 
 // Function to add product to cart
 function addToCart(productId, quantity = 1) {
+    // Create form data
+    const formData = new FormData();
+    formData.append('product_id', productId);
+    formData.append('quantity', quantity);
+
     fetch('../actions/add_to_cart_action.php', {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: `product_id=${productId}&quantity=${quantity}`
+        body: formData
     })
     .then(response => response.json())
     .then(data => {
@@ -34,12 +36,13 @@ function updateCartQuantity(productId, quantity) {
         return;
     }
 
+    const formData = new FormData();
+    formData.append('product_id', productId);
+    formData.append('quantity', quantity);
+
     fetch('../actions/update_quantity_action.php', {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: `product_id=${productId}&quantity=${quantity}`
+        body: formData
     })
     .then(response => response.json())
     .then(data => {
@@ -64,12 +67,12 @@ function removeFromCart(productId) {
         return;
     }
 
+    const formData = new FormData();
+    formData.append('product_id', productId);
+
     fetch('../actions/remove_from_cart_action.php', {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: `product_id=${productId}`
+        body: formData
     })
     .then(response => response.json())
     .then(data => {
@@ -95,10 +98,7 @@ function emptyCart() {
     }
 
     fetch('../actions/empty_cart_action.php', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-        }
+        method: 'POST'
     })
     .then(response => response.json())
     .then(data => {

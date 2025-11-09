@@ -55,10 +55,7 @@ function processCheckout() {
     showLoadingModal();
 
     fetch('../actions/process_checkout_action.php', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-        }
+        method: 'POST'
     })
     .then(response => response.json())
     .then(data => {
