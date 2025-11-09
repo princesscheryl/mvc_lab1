@@ -14,7 +14,7 @@ $subtotal = 0;
 foreach ($cart_items as $item) {
     $subtotal += $item['subtotal'];
 }
-$tax = $subtotal * 0.0; // No tax for now, you can adjust this
+$tax = $subtotal * 0.0;
 $total = $subtotal + $tax;
 ?>
 <!DOCTYPE html>
@@ -22,192 +22,419 @@ $total = $subtotal + $tax;
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shopping Cart - Taste of Africa</title>
-
-    <!-- Bootstrap CSS -->
+    <title>Shopping Cart - Shopify</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="../css/index.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="../css/index.css" rel="stylesheet">
+    <style>
+        body {
+            background: var(--gray-50);
+        }
+
+        .cart-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            padding: 60px 0 40px;
+            margin-bottom: 40px;
+        }
+
+        .cart-header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .cart-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px 60px;
+        }
+
+        .cart-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: var(--shadow-md);
+            padding: 32px;
+            margin-bottom: 24px;
+        }
+
+        .cart-item {
+            display: grid;
+            grid-template-columns: 120px 1fr auto;
+            gap: 24px;
+            padding: 24px 0;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .cart-item-image {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 12px;
+            background: var(--gray-100);
+        }
+
+        .cart-item-details {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .cart-item-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 8px;
+        }
+
+        .cart-item-meta {
+            color: var(--gray-600);
+            font-size: 0.95rem;
+            margin-bottom: 12px;
+        }
+
+        .cart-item-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .cart-item-actions {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            justify-content: space-between;
+        }
+
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--gray-50);
+            border-radius: 8px;
+            padding: 8px 16px;
+        }
+
+        .quantity-input {
+            width: 60px;
+            text-align: center;
+            border: 1px solid var(--gray-300);
+            border-radius: 6px;
+            padding: 6px;
+            font-weight: 600;
+        }
+
+        .btn-remove {
+            background: transparent;
+            border: none;
+            color: var(--danger, #e74c3c);
+            font-size: 1.25rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            padding: 8px;
+        }
+
+        .btn-remove:hover {
+            color: #c0392b;
+            transform: scale(1.1);
+        }
+
+        .summary-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: var(--shadow-md);
+            padding: 32px;
+            position: sticky;
+            top: 20px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            font-size: 1.1rem;
+        }
+
+        .summary-total {
+            border-top: 2px solid var(--gray-200);
+            margin-top: 16px;
+            padding-top: 16px;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .btn-checkout {
+            width: 100%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-top: 24px;
+            transition: all 0.3s;
+        }
+
+        .btn-checkout:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(103, 146, 103, 0.3);
+        }
+
+        .btn-continue {
+            background: var(--gray-200);
+            color: var(--gray-700);
+            border: none;
+            padding: 14px 32px;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-continue:hover {
+            background: var(--gray-300);
+            color: var(--gray-900);
+        }
+
+        .btn-empty {
+            background: transparent;
+            border: 2px solid var(--danger, #e74c3c);
+            color: var(--danger, #e74c3c);
+            padding: 14px 32px;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-empty:hover {
+            background: var(--danger, #e74c3c);
+            color: white;
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: 80px 20px;
+        }
+
+        .empty-cart i {
+            font-size: 5rem;
+            color: var(--gray-300);
+            margin-bottom: 24px;
+        }
+
+        .empty-cart h3 {
+            color: var(--gray-700);
+            margin-bottom: 16px;
+        }
+
+        .benefits {
+            background: var(--gray-50);
+            border-radius: 12px;
+            padding: 24px;
+            margin-top: 24px;
+        }
+
+        .benefit-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .benefit-item i {
+            color: var(--primary);
+            font-size: 1.25rem;
+        }
+
+        @media (max-width: 768px) {
+            .cart-item {
+                grid-template-columns: 80px 1fr;
+                gap: 16px;
+            }
+
+            .cart-item-actions {
+                grid-column: 1 / -1;
+                flex-direction: row;
+                justify-content: space-between;
+            }
+        }
+    </style>
 </head>
 <body>
-    <!-- Navigation Bar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand" href="../index.php">
-                <i class="fas fa-store"></i> Taste of Africa
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="../index.php">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="all_product.php">Products</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="cart.php">
-                            <i class="fas fa-shopping-cart"></i> Cart
-                            <span class="badge bg-danger cart-count"><?php echo count($cart_items); ?></span>
-                        </a>
-                    </li>
-                    <?php if (isset($_SESSION['user_id'])): ?>
-                        <li class="nav-item">
-                            <a class="nav-link" href="../login/logout.php">Logout</a>
-                        </li>
-                    <?php else: ?>
-                        <li class="nav-item">
-                            <a class="nav-link" href="../login/login.php">Login</a>
-                        </li>
-                    <?php endif; ?>
-                </ul>
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <div class="nav-left">
+                <a href="../index.php" class="logo">shopify<span class="logo-dot">.</span></a>
+            </div>
+            <div class="nav-right">
+                <a href="all_product.php" class="nav-link">Products</a>
+                <a href="cart.php" class="nav-link" style="position: relative; margin-right: 20px;">
+                    <i class="fa fa-shopping-cart"></i> Cart
+                    <span class="cart-count" style="position: absolute; top: -8px; right: -10px; background: #e74c3c; color: white; border-radius: 50%; padding: 2px 6px; font-size: 12px; font-weight: bold;"><?php echo count($cart_items); ?></span>
+                </a>
+                <?php if(isset($_SESSION['user_id'])): ?>
+                    <span class="nav-user">
+                        <i class="fa fa-user-circle"></i>
+                        <?php echo htmlspecialchars($_SESSION['user_name']); ?>
+                    </span>
+                    <a href="../login/logout.php" class="btn-nav btn-nav-logout">Logout</a>
+                <?php else: ?>
+                    <a href="../login/login.php" class="nav-link">Sign in</a>
+                    <a href="../login/register.php" class="btn-nav btn-nav-join">Join</a>
+                <?php endif; ?>
             </div>
         </div>
     </nav>
 
-    <!-- Main Content -->
-    <div class="container my-5">
-        <h1 class="mb-4">
-            <i class="fas fa-shopping-cart"></i> Shopping Cart
-        </h1>
+    <!-- Cart Header -->
+    <div class="cart-header">
+        <div class="container text-center">
+            <h1><i class="fa fa-shopping-cart"></i> Shopping Cart</h1>
+            <p><?php echo count($cart_items); ?> item<?php echo count($cart_items) != 1 ? 's' : ''; ?> in your cart</p>
+        </div>
+    </div>
 
+    <!-- Cart Content -->
+    <div class="cart-container">
         <?php if (empty($cart_items)): ?>
-            <!-- Empty Cart Message -->
-            <div class="text-center py-5">
-                <i class="fas fa-shopping-cart fa-5x text-muted mb-3"></i>
-                <h3>Your cart is empty</h3>
-                <p class="text-muted">Start shopping to add items to your cart!</p>
-                <a href="all_product.php" class="btn btn-primary mt-3">
-                    <i class="fas fa-arrow-left"></i> Continue Shopping
-                </a>
+            <!-- Empty Cart -->
+            <div class="cart-card">
+                <div class="empty-cart">
+                    <i class="fa fa-shopping-cart"></i>
+                    <h3>Your cart is empty</h3>
+                    <p class="text-muted mb-4">Start shopping to add items to your cart!</p>
+                    <a href="all_product.php" class="btn-checkout">
+                        <i class="fa fa-arrow-left"></i> Continue Shopping
+                    </a>
+                </div>
             </div>
         <?php else: ?>
             <div class="row">
                 <!-- Cart Items -->
                 <div class="col-lg-8">
-                    <div class="card mb-4">
-                        <div class="card-header bg-primary text-white">
-                            <h5 class="mb-0">Cart Items (<?php echo count($cart_items); ?>)</h5>
-                        </div>
-                        <div class="card-body">
-                            <?php foreach ($cart_items as $item): ?>
-                                <div class="row border-bottom py-3 align-items-center">
-                                    <!-- Product Image -->
-                                    <div class="col-md-2">
+                    <div class="cart-card">
+                        <h4 class="mb-4" style="font-weight: 700; color: var(--gray-900);">Cart Items</h4>
+
+                        <?php foreach ($cart_items as $item): ?>
+                            <div class="cart-item">
+                                <!-- Product Image -->
+                                <div>
+                                    <?php if (!empty($item['product_image'])): ?>
                                         <img src="../images/<?php echo htmlspecialchars($item['product_image']); ?>"
                                              alt="<?php echo htmlspecialchars($item['product_title']); ?>"
-                                             class="img-fluid rounded">
-                                    </div>
+                                             class="cart-item-image"
+                                             onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22120%22 height=%22120%22%3E%3Crect fill=%22%23f0f0f0%22 width=%22120%22 height=%22120%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%22%23999%22 font-size=%2214%22%3ENo Image%3C/text%3E%3C/svg%3E';">
+                                    <?php else: ?>
+                                        <div class="cart-item-image" style="display: flex; align-items: center; justify-content: center;">
+                                            <i class="fa fa-image" style="font-size: 2rem; color: var(--gray-400);"></i>
+                                        </div>
+                                    <?php endif; ?>
+                                </div>
 
-                                    <!-- Product Details -->
-                                    <div class="col-md-4">
-                                        <h6><?php echo htmlspecialchars($item['product_title']); ?></h6>
-                                        <p class="text-muted mb-0">
-                                            <small>
-                                                <?php if ($item['cat_name']): ?>
-                                                    Category: <?php echo htmlspecialchars($item['cat_name']); ?>
-                                                <?php endif; ?>
-                                            </small>
-                                        </p>
+                                <!-- Product Details -->
+                                <div class="cart-item-details">
+                                    <div>
+                                        <div class="cart-item-title"><?php echo htmlspecialchars($item['product_title']); ?></div>
+                                        <div class="cart-item-meta">
+                                            <?php if ($item['cat_name']): ?>
+                                                <i class="fa fa-tag"></i> <?php echo htmlspecialchars($item['cat_name']); ?>
+                                            <?php endif; ?>
+                                            <?php if ($item['brand_name']): ?>
+                                                &nbsp;•&nbsp; <i class="fa fa-bookmark"></i> <?php echo htmlspecialchars($item['brand_name']); ?>
+                                            <?php endif; ?>
+                                        </div>
                                     </div>
+                                    <div class="cart-item-price">GHS <?php echo number_format($item['product_price'], 2); ?></div>
+                                </div>
 
-                                    <!-- Price -->
-                                    <div class="col-md-2 text-center">
-                                        <p class="mb-0"><strong>GHS <?php echo number_format($item['product_price'], 2); ?></strong></p>
-                                    </div>
-
-                                    <!-- Quantity -->
-                                    <div class="col-md-2 text-center">
+                                <!-- Quantity & Actions -->
+                                <div class="cart-item-actions">
+                                    <button class="btn-remove remove-item-btn" data-product-id="<?php echo $item['p_id']; ?>">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                    <div class="quantity-control">
+                                        <label style="font-size: 0.9rem; color: var(--gray-600);">Qty:</label>
                                         <input type="number"
-                                               class="form-control quantity-input"
+                                               class="quantity-input"
                                                value="<?php echo $item['qty']; ?>"
                                                min="1"
-                                               max="100"
+                                               max="99"
                                                data-product-id="<?php echo $item['p_id']; ?>">
                                     </div>
-
-                                    <!-- Subtotal & Remove -->
-                                    <div class="col-md-2 text-center">
-                                        <p class="mb-2"><strong>GHS <?php echo number_format($item['subtotal'], 2); ?></strong></p>
-                                        <button class="btn btn-sm btn-danger remove-item-btn"
-                                                data-product-id="<?php echo $item['p_id']; ?>">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </div>
                                 </div>
-                            <?php endforeach; ?>
-                        </div>
-                    </div>
+                            </div>
+                        <?php endforeach; ?>
 
-                    <!-- Action Buttons -->
-                    <div class="d-flex justify-content-between">
-                        <a href="all_product.php" class="btn btn-outline-primary">
-                            <i class="fas fa-arrow-left"></i> Continue Shopping
-                        </a>
-                        <button class="btn btn-outline-danger" id="empty-cart-btn">
-                            <i class="fas fa-trash-alt"></i> Empty Cart
-                        </button>
+                        <!-- Action Buttons -->
+                        <div class="d-flex justify-content-between mt-4">
+                            <a href="all_product.php" class="btn-continue">
+                                <i class="fa fa-arrow-left"></i> Continue Shopping
+                            </a>
+                            <button class="btn-empty" id="empty-cart-btn">
+                                <i class="fa fa-trash-alt"></i> Empty Cart
+                            </button>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Order Summary -->
                 <div class="col-lg-4">
-                    <div class="card">
-                        <div class="card-header bg-success text-white">
-                            <h5 class="mb-0">Order Summary</h5>
-                        </div>
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between mb-2">
-                                <span>Subtotal:</span>
-                                <strong>GHS <?php echo number_format($subtotal, 2); ?></strong>
-                            </div>
-                            <div class="d-flex justify-content-between mb-2">
-                                <span>Tax:</span>
-                                <strong>GHS <?php echo number_format($tax, 2); ?></strong>
-                            </div>
-                            <hr>
-                            <div class="d-flex justify-content-between mb-3">
-                                <h5>Total:</h5>
-                                <h5 class="text-success">GHS <?php echo number_format($total, 2); ?></h5>
-                            </div>
+                    <div class="summary-card">
+                        <h4 style="font-weight: 700; margin-bottom: 24px;">Order Summary</h4>
 
-                            <?php if (isset($_SESSION['user_id'])): ?>
-                                <a href="checkout.php" class="btn btn-success w-100">
-                                    <i class="fas fa-lock"></i> Proceed to Checkout
-                                </a>
-                            <?php else: ?>
-                                <div class="alert alert-warning">
-                                    <small>Please <a href="../login/login.php">login</a> to checkout</small>
-                                </div>
-                                <a href="../login/login.php" class="btn btn-primary w-100">
-                                    <i class="fas fa-sign-in-alt"></i> Login to Checkout
-                                </a>
-                            <?php endif; ?>
+                        <div class="summary-row">
+                            <span>Subtotal:</span>
+                            <strong>GHS <?php echo number_format($subtotal, 2); ?></strong>
                         </div>
-                    </div>
+                        <div class="summary-row">
+                            <span>Tax:</span>
+                            <strong>GHS <?php echo number_format($tax, 2); ?></strong>
+                        </div>
 
-                    <!-- Additional Info -->
-                    <div class="card mt-3">
-                        <div class="card-body">
-                            <h6 class="card-title">Why Shop With Us?</h6>
-                            <ul class="list-unstyled">
-                                <li class="mb-2">
-                                    <i class="fas fa-check-circle text-success"></i> Secure Payment
-                                </li>
-                                <li class="mb-2">
-                                    <i class="fas fa-check-circle text-success"></i> Fast Delivery
-                                </li>
-                                <li class="mb-2">
-                                    <i class="fas fa-check-circle text-success"></i> 24/7 Support
-                                </li>
-                                <li class="mb-2">
-                                    <i class="fas fa-check-circle text-success"></i> Quality Products
-                                </li>
-                            </ul>
+                        <div class="summary-row summary-total">
+                            <span>Total:</span>
+                            <span style="color: var(--primary);">GHS <?php echo number_format($total, 2); ?></span>
+                        </div>
+
+                        <?php if (isset($_SESSION['user_id'])): ?>
+                            <a href="checkout.php" class="btn-checkout">
+                                <i class="fa fa-lock"></i> Proceed to Checkout
+                            </a>
+                        <?php else: ?>
+                            <div class="alert alert-warning mt-3" style="font-size: 0.9rem;">
+                                Please <a href="../login/login.php" style="font-weight: 600;">login</a> to checkout
+                            </div>
+                            <a href="../login/login.php" class="btn-checkout">
+                                <i class="fa fa-sign-in-alt"></i> Login to Checkout
+                            </a>
+                        <?php endif; ?>
+
+                        <!-- Benefits -->
+                        <div class="benefits">
+                            <div class="benefit-item">
+                                <i class="fa fa-check-circle"></i>
+                                <span>Secure Payment</span>
+                            </div>
+                            <div class="benefit-item">
+                                <i class="fa fa-truck"></i>
+                                <span>Fast Delivery</span>
+                            </div>
+                            <div class="benefit-item">
+                                <i class="fa fa-headset"></i>
+                                <span>24/7 Support</span>
+                            </div>
+                            <div class="benefit-item">
+                                <i class="fa fa-shield-alt"></i>
+                                <span>Quality Products</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -215,9 +442,7 @@ $total = $subtotal + $tax;
         <?php endif; ?>
     </div>
 
-    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Custom Cart JS -->
     <script src="../js/cart.js"></script>
 </body>
 </html>
