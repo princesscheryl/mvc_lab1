@@ -39,6 +39,10 @@ if ($featured_products && count($featured_products) > 6) {
             </div>
             <div class="nav-right">
                 <a href="view/all_product.php" class="nav-link">All Products</a>
+                <a href="view/cart.php" class="nav-link" style="position: relative; margin-right: 20px;">
+                    <i class="fa fa-shopping-cart"></i> Cart
+                    <span class="cart-count" style="position: absolute; top: -8px; right: -10px; background: #e74c3c; color: white; border-radius: 50%; padding: 2px 6px; font-size: 12px; font-weight: bold;">0</span>
+                </a>
                 <?php if(isset($_SESSION['user_id'])): ?>
                     <span class="nav-user">
                         <i class="fa fa-user-circle"></i>
@@ -572,6 +576,20 @@ if ($featured_products && count($featured_products) > 6) {
         if (prefersReducedMotion.matches) {
             document.documentElement.style.setProperty('--animation-duration', '0.01ms');
         }
+
+        // ===== CART COUNT LOADER =====
+        // Load cart count when page loads
+        fetch('actions/get_cart_count_action.php')
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const cartCountElements = document.querySelectorAll('.cart-count');
+                    cartCountElements.forEach(element => {
+                        element.textContent = data.cart_count;
+                    });
+                }
+            })
+            .catch(error => console.error('Error loading cart count:', error));
     </script>
 </body>
 </html>

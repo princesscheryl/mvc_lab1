@@ -255,6 +255,10 @@ $related_products = array_slice($related_products, 0, 4);
                 <a href="../index.php" class="logo">shopify<span class="logo-dot">.</span></a>
             </div>
             <div class="nav-right">
+                <a href="cart.php" class="nav-link" style="position: relative; margin-right: 20px;">
+                    <i class="fa fa-shopping-cart"></i> Cart
+                    <span class="cart-count" style="position: absolute; top: -8px; right: -10px; background: #e74c3c; color: white; border-radius: 50%; padding: 2px 6px; font-size: 12px; font-weight: bold;">0</span>
+                </a>
                 <?php if(isset($_SESSION['user_id'])): ?>
                     <span class="nav-user">
                         <i class="fa fa-user-circle"></i>
@@ -407,5 +411,18 @@ $related_products = array_slice($related_products, 0, 4);
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../js/cart.js"></script>
+    <script>
+        // Load cart count when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('../actions/get_cart_count_action.php')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        updateCartCount(data.cart_count);
+                    }
+                })
+                .catch(error => console.error('Error loading cart count:', error));
+        });
+    </script>
 </body>
 </html>
