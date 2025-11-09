@@ -178,12 +178,19 @@ $total = $subtotal + $tax;
             font-weight: 700;
             margin-top: 24px;
             transition: all 0.3s;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
 
         .btn-checkout:hover {
             background: var(--primary-dark);
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(103, 146, 103, 0.3);
+            color: white;
+            text-decoration: none;
         }
 
         .btn-continue {
@@ -234,23 +241,63 @@ $total = $subtotal + $tax;
             margin-bottom: 16px;
         }
 
-        .benefits {
+        .promo-section {
             background: var(--gray-50);
             border-radius: 12px;
             padding: 24px;
             margin-top: 24px;
         }
 
-        .benefit-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
+        .promo-section h6 {
+            font-weight: 700;
             margin-bottom: 12px;
+            color: var(--gray-900);
         }
 
-        .benefit-item i {
+        .promo-input-group {
+            display: flex;
+            gap: 8px;
+        }
+
+        .promo-input {
+            flex: 1;
+            border: 1px solid var(--gray-300);
+            border-radius: 8px;
+            padding: 10px 14px;
+            font-size: 0.95rem;
+        }
+
+        .promo-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .btn-apply-promo {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-apply-promo:hover {
+            background: var(--primary-dark);
+        }
+
+        .help-text {
+            font-size: 0.85rem;
+            color: var(--gray-600);
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--gray-200);
+        }
+
+        .help-text i {
             color: var(--primary);
-            font-size: 1.25rem;
+            margin-right: 6px;
         }
 
         @media (max-width: 768px) {
@@ -406,34 +453,34 @@ $total = $subtotal + $tax;
 
                         <?php if (isset($_SESSION['user_id'])): ?>
                             <a href="checkout.php" class="btn-checkout">
-                                <i class="fa fa-lock"></i> Proceed to Checkout
+                                <i class="fa fa-lock"></i>
+                                <span>Proceed to Checkout</span>
                             </a>
                         <?php else: ?>
                             <div class="alert alert-warning mt-3" style="font-size: 0.9rem;">
                                 Please <a href="../login/login.php" style="font-weight: 600;">login</a> to checkout
                             </div>
                             <a href="../login/login.php" class="btn-checkout">
-                                <i class="fa fa-sign-in-alt"></i> Login to Checkout
+                                <i class="fa fa-sign-in-alt"></i>
+                                <span>Login to Checkout</span>
                             </a>
                         <?php endif; ?>
 
-                        <!-- Benefits -->
-                        <div class="benefits">
-                            <div class="benefit-item">
-                                <i class="fa fa-check-circle"></i>
-                                <span>Secure Payment</span>
+                        <!-- Promo Code Section -->
+                        <div class="promo-section">
+                            <h6><i class="fa fa-tag"></i> Have a promo code?</h6>
+                            <div class="promo-input-group">
+                                <input type="text"
+                                       class="promo-input"
+                                       placeholder="Enter promo code"
+                                       id="promo-code-input">
+                                <button class="btn-apply-promo" onclick="alert('Promo code feature coming soon!')">
+                                    Apply
+                                </button>
                             </div>
-                            <div class="benefit-item">
-                                <i class="fa fa-truck"></i>
-                                <span>Fast Delivery</span>
-                            </div>
-                            <div class="benefit-item">
-                                <i class="fa fa-headset"></i>
-                                <span>24/7 Support</span>
-                            </div>
-                            <div class="benefit-item">
-                                <i class="fa fa-shield-alt"></i>
-                                <span>Quality Products</span>
+                            <div class="help-text">
+                                <i class="fa fa-info-circle"></i>
+                                Need help? <a href="#" style="color: var(--primary); font-weight: 600;">Contact Support</a>
                             </div>
                         </div>
                     </div>
