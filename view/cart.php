@@ -276,12 +276,13 @@ $total = $subtotal + $tax;
             background: var(--primary);
             color: white;
             border: none;
-            padding: 18px 24px;
+            padding: 10px 24px;
             border-radius: 8px;
             font-weight: 600;
             font-size: 0.95rem;
             cursor: pointer;
             transition: all 0.3s;
+            height: fit-content;
         }
 
         .btn-apply-promo:hover {
