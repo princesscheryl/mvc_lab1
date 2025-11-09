@@ -276,7 +276,7 @@ $total = $subtotal + $tax;
             background: var(--primary);
             color: white;
             border: none;
-            padding: 11px 24px;
+            padding: 18px 24px;
             border-radius: 8px;
             font-weight: 600;
             font-size: 0.95rem;
