@@ -18,10 +18,15 @@ class Order extends db_connection {
      * @return int|bool The order ID if successful, false on failure
      */
     public function createOrder($customer_id, $invoice_no, $order_date, $order_status) {
+        // Connect to database
+        if (!$this->db_connect()) {
+            return false;
+        }
+
         $sql = "INSERT INTO orders (customer_id, invoice_no, order_date, order_status)
                 VALUES (?, ?, ?, ?)";
 
-        $stmt = $this->db_connect()->prepare($sql);
+        $stmt = $this->db->prepare($sql);
 
         if (!$stmt) {
             return false;
@@ -50,10 +55,15 @@ class Order extends db_connection {
      * @return bool True on success, false on failure
      */
     public function addOrderDetails($order_id, $product_id, $quantity) {
+        // Connect to database
+        if (!$this->db_connect()) {
+            return false;
+        }
+
         $sql = "INSERT INTO orderdetails (order_id, product_id, qty)
                 VALUES (?, ?, ?)";
 
-        $stmt = $this->db_connect()->prepare($sql);
+        $stmt = $this->db->prepare($sql);
 
         if (!$stmt) {
             return false;
@@ -77,10 +87,15 @@ class Order extends db_connection {
      * @return int|bool The payment ID if successful, false on failure
      */
     public function recordPayment($amount, $customer_id, $order_id, $currency, $payment_date) {
+        // Connect to database
+        if (!$this->db_connect()) {
+            return false;
+        }
+
         $sql = "INSERT INTO payment (amt, customer_id, order_id, currency, payment_date)
                 VALUES (?, ?, ?, ?, ?)";
 
-        $stmt = $this->db_connect()->prepare($sql);
+        $stmt = $this->db->prepare($sql);
 
         if (!$stmt) {
             return false;
@@ -106,6 +121,11 @@ class Order extends db_connection {
      * @return array Array of orders with details
      */
     public function getUserOrders($customer_id) {
+        // Connect to database
+        if (!$this->db_connect()) {
+            return array();
+        }
+
         $sql = "SELECT o.order_id, o.invoice_no, o.order_date, o.order_status,
                 p.amt as payment_amount, p.currency, p.payment_date
                 FROM orders o
@@ -113,7 +133,7 @@ class Order extends db_connection {
                 WHERE o.customer_id = ?
                 ORDER BY o.order_date DESC";
 
-        $stmt = $this->db_connect()->prepare($sql);
+        $stmt = $this->db->prepare($sql);
 
         if (!$stmt) {
             return array();
@@ -139,13 +159,18 @@ class Order extends db_connection {
      * @return array Order details with items
      */
     public function getOrderDetails($order_id) {
+        // Connect to database
+        if (!$this->db_connect()) {
+            return array();
+        }
+
         $sql = "SELECT od.product_id, od.qty, p.product_title, p.product_price, p.product_image,
                 (od.qty * p.product_price) as subtotal
                 FROM orderdetails od
                 JOIN products p ON od.product_id = p.product_id
                 WHERE od.order_id = ?";
 
-        $stmt = $this->db_connect()->prepare($sql);
+        $stmt = $this->db->prepare($sql);
 
         if (!$stmt) {
             return array();
@@ -171,12 +196,17 @@ class Order extends db_connection {
      * @return array|null Order information or null if not found
      */
     public function getOrderById($order_id) {
+        // Connect to database
+        if (!$this->db_connect()) {
+            return null;
+        }
+
         $sql = "SELECT o.*, c.customer_name, c.customer_email, c.customer_contact
                 FROM orders o
                 JOIN customer c ON o.customer_id = c.customer_id
                 WHERE o.order_id = ?";
 
-        $stmt = $this->db_connect()->prepare($sql);
+        $stmt = $this->db->prepare($sql);
 
         if (!$stmt) {
             return null;
@@ -199,8 +229,13 @@ class Order extends db_connection {
      * @return bool True on success, false on failure
      */
     public function updateOrderStatus($order_id, $status) {
+        // Connect to database
+        if (!$this->db_connect()) {
+            return false;
+        }
+
         $sql = "UPDATE orders SET order_status = ? WHERE order_id = ?";
-        $stmt = $this->db_connect()->prepare($sql);
+        $stmt = $this->db->prepare($sql);
 
         if (!$stmt) {
             return false;

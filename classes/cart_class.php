@@ -28,9 +28,14 @@ class Cart extends db_connection {
             return $this->updateCartQuantity($existing['p_id'], $customer_id, $ip_address, $new_quantity);
         }
 
+        // Connect to database
+        if (!$this->db_connect()) {
+            return false;
+        }
+
         // Product doesn't exist, add new entry
         $sql = "INSERT INTO cart (p_id, c_id, ip_add, qty) VALUES (?, ?, ?, ?)";
-        $stmt = $this->db_connect()->prepare($sql);
+        $stmt = $this->db->prepare($sql);
 
         if (!$stmt) {
             return false;
@@ -52,15 +57,20 @@ class Cart extends db_connection {
      * @return array|null Cart item if exists, null otherwise
      */
     public function checkProductInCart($product_id, $customer_id, $ip_address) {
+        // Connect to database
+        if (!$this->db_connect()) {
+            return null;
+        }
+
         if ($customer_id > 0) {
             // Logged in user
             $sql = "SELECT * FROM cart WHERE p_id = ? AND c_id = ?";
-            $stmt = $this->db_connect()->prepare($sql);
+            $stmt = $this->db->prepare($sql);
             $stmt->bind_param("ii", $product_id, $customer_id);
         } else {
             // Guest user
             $sql = "SELECT * FROM cart WHERE p_id = ? AND ip_add = ?";
-            $stmt = $this->db_connect()->prepare($sql);
+            $stmt = $this->db->prepare($sql);
             $stmt->bind_param("is", $product_id, $ip_address);
         }
 
@@ -86,15 +96,20 @@ class Cart extends db_connection {
      * @return bool True on success, false on failure
      */
     public function updateCartQuantity($product_id, $customer_id, $ip_address, $new_quantity) {
+        // Connect to database
+        if (!$this->db_connect()) {
+            return false;
+        }
+
         if ($customer_id > 0) {
             // Logged in user
             $sql = "UPDATE cart SET qty = ? WHERE p_id = ? AND c_id = ?";
-            $stmt = $this->db_connect()->prepare($sql);
+            $stmt = $this->db->prepare($sql);
             $stmt->bind_param("iii", $new_quantity, $product_id, $customer_id);
         } else {
             // Guest user
             $sql = "UPDATE cart SET qty = ? WHERE p_id = ? AND ip_add = ?";
-            $stmt = $this->db_connect()->prepare($sql);
+            $stmt = $this->db->prepare($sql);
             $stmt->bind_param("iis", $new_quantity, $product_id, $ip_address);
         }
 
@@ -117,15 +132,20 @@ class Cart extends db_connection {
      * @return bool True on success, false on failure
      */
     public function removeFromCart($product_id, $customer_id, $ip_address) {
+        // Connect to database
+        if (!$this->db_connect()) {
+            return false;
+        }
+
         if ($customer_id > 0) {
             // Logged in user
             $sql = "DELETE FROM cart WHERE p_id = ? AND c_id = ?";
-            $stmt = $this->db_connect()->prepare($sql);
+            $stmt = $this->db->prepare($sql);
             $stmt->bind_param("ii", $product_id, $customer_id);
         } else {
             // Guest user
             $sql = "DELETE FROM cart WHERE p_id = ? AND ip_add = ?";
-            $stmt = $this->db_connect()->prepare($sql);
+            $stmt = $this->db->prepare($sql);
             $stmt->bind_param("is", $product_id, $ip_address);
         }
 
@@ -147,6 +167,11 @@ class Cart extends db_connection {
      * @return array Array of cart items with product details
      */
     public function getUserCart($customer_id, $ip_address) {
+        // Connect to database
+        if (!$this->db_connect()) {
+            return array();
+        }
+
         if ($customer_id > 0) {
             // Logged in user
             $sql = "SELECT c.p_id, c.qty, p.product_title, p.product_price, p.product_image,
@@ -157,7 +182,7 @@ class Cart extends db_connection {
                     LEFT JOIN categories cat ON p.product_cat = cat.cat_id
                     LEFT JOIN brands b ON p.product_brand = b.brand_id
                     WHERE c.c_id = ?";
-            $stmt = $this->db_connect()->prepare($sql);
+            $stmt = $this->db->prepare($sql);
             $stmt->bind_param("i", $customer_id);
         } else {
             // Guest user
@@ -169,7 +194,7 @@ class Cart extends db_connection {
                     LEFT JOIN categories cat ON p.product_cat = cat.cat_id
                     LEFT JOIN brands b ON p.product_brand = b.brand_id
                     WHERE c.ip_add = ?";
-            $stmt = $this->db_connect()->prepare($sql);
+            $stmt = $this->db->prepare($sql);
             $stmt->bind_param("s", $ip_address);
         }
 
@@ -197,15 +222,20 @@ class Cart extends db_connection {
      * @return bool True on success, false on failure
      */
     public function emptyCart($customer_id, $ip_address) {
+        // Connect to database
+        if (!$this->db_connect()) {
+            return false;
+        }
+
         if ($customer_id > 0) {
             // Logged in user
             $sql = "DELETE FROM cart WHERE c_id = ?";
-            $stmt = $this->db_connect()->prepare($sql);
+            $stmt = $this->db->prepare($sql);
             $stmt->bind_param("i", $customer_id);
         } else {
             // Guest user
             $sql = "DELETE FROM cart WHERE ip_add = ?";
-            $stmt = $this->db_connect()->prepare($sql);
+            $stmt = $this->db->prepare($sql);
             $stmt->bind_param("s", $ip_address);
         }
 
@@ -227,13 +257,18 @@ class Cart extends db_connection {
      * @return int Total count of items
      */
     public function getCartCount($customer_id, $ip_address) {
+        // Connect to database
+        if (!$this->db_connect()) {
+            return 0;
+        }
+
         if ($customer_id > 0) {
             $sql = "SELECT SUM(qty) as total FROM cart WHERE c_id = ?";
-            $stmt = $this->db_connect()->prepare($sql);
+            $stmt = $this->db->prepare($sql);
             $stmt->bind_param("i", $customer_id);
         } else {
             $sql = "SELECT SUM(qty) as total FROM cart WHERE ip_add = ?";
-            $stmt = $this->db_connect()->prepare($sql);
+            $stmt = $this->db->prepare($sql);
             $stmt->bind_param("s", $ip_address);
         }
 
