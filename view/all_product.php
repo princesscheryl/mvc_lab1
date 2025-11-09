@@ -321,7 +321,7 @@ $paginated_products = array_slice($filtered_products, $offset, $items_per_page);
                             <div class="product-price">
                                 $<?php echo number_format($product['product_price'], 2); ?>
                             </div>
-                            <button class="btn-add-cart" onclick="alert('Add to cart functionality coming soon!')">
+                            <button class="btn-add-cart add-to-cart-btn" data-product-id="<?php echo $product['product_id']; ?>">
                                 <i class="fa fa-shopping-cart"></i> Add to Cart
                             </button>
                         </div>
@@ -357,6 +357,7 @@ $paginated_products = array_slice($filtered_products, $offset, $items_per_page);
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/cart.js"></script>
     <script>
         function applyFilter() {
             const category = document.getElementById('categoryFilter').value;

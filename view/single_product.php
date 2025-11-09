@@ -355,7 +355,7 @@ $related_products = array_slice($related_products, 0, 4);
                     <?php endif; ?>
 
                     <div class="d-flex gap-3">
-                        <button class="btn-add-cart-large" onclick="alert('Add to cart functionality coming soon!')">
+                        <button class="btn-add-cart-large add-to-cart-btn" data-product-id="<?php echo $product['product_id']; ?>">
                             <i class="fa fa-shopping-cart"></i> Add to Cart
                         </button>
                         <a href="all_product.php" class="btn-back">
@@ -406,5 +406,6 @@ $related_products = array_slice($related_products, 0, 4);
     <div style="height: 80px;"></div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/cart.js"></script>
 </body>
 </html>
