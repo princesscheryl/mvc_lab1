@@ -302,6 +302,46 @@ $total = $subtotal + $tax;
             margin-right: 6px;
         }
 
+        .progress-steps {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .progress-step {
+            text-align: center;
+        }
+
+        .progress-step i {
+            font-size: 2.5rem;
+            margin-bottom: 8px;
+        }
+
+        .progress-step p {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .progress-step.active i {
+            color: var(--primary);
+        }
+
+        .progress-step.active p {
+            color: var(--primary);
+        }
+
+        .progress-step.inactive i, .progress-step.inactive p {
+            color: var(--gray-400);
+        }
+
+        .progress-arrow {
+            color: var(--gray-400);
+            font-size: 1.5rem;
+        }
+
         @media (max-width: 768px) {
             .cart-item {
                 grid-template-columns: 80px 1fr;
@@ -353,6 +393,23 @@ $total = $subtotal + $tax;
 
     <!-- Cart Content -->
     <div class="cart-container">
+        <!-- Progress Steps -->
+        <div class="progress-steps">
+            <div class="progress-step active">
+                <i class="fa fa-shopping-cart"></i>
+                <p>Cart</p>
+            </div>
+            <i class="fa fa-chevron-right progress-arrow"></i>
+            <div class="progress-step inactive">
+                <i class="fa fa-credit-card"></i>
+                <p>Checkout</p>
+            </div>
+            <i class="fa fa-chevron-right progress-arrow"></i>
+            <div class="progress-step inactive">
+                <i class="fa fa-check-circle"></i>
+                <p>Complete</p>
+            </div>
+        </div>
         <?php if (empty($cart_items)): ?>
             <!-- Empty Cart -->
             <div class="cart-card">
